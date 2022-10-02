@@ -1,13 +1,19 @@
 import React from "react";
-import logo from "./assets/icons/logo.svg";
 import "./App.css";
+import Counter from "./components/Counter";
+import CounterWithHook from "./components/CounterWithHook";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <div>
+        <h3>Counter: </h3>
+        <Counter />
+      </div>
+      <div>
+        <h3>Counter With Hook: </h3>
+        <CounterWithHook />
+      </div>
     </div>
   );
 }
