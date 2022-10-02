@@ -3,6 +3,7 @@ import "./App.css";
 import Counter from "./components/Counter";
 import CounterWithHook from "./components/CounterWithHook";
 import Users from "./components/Users";
+import UsersWithHook from "./components/UsersWithHook";
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
       <div>
         <h3>Users: </h3>
         <Users />
+      </div>
+      <div>
+        <h3>Users With Hook: </h3>
+        <UsersWithHook />
       </div>
     </div>
   );
