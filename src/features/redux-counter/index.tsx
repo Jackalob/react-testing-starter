@@ -21,7 +21,9 @@ const ReduxCounter = ({ step = 1 }: IProps) => {
       >
         -
       </button>
-      <span style={{ marginLeft: "8px", marginRight: "8px" }}>{count}</span>
+      <span role="value" style={{ marginLeft: "8px", marginRight: "8px" }}>
+        {count}
+      </span>
       <button
         aria-label="Increment value"
         onClick={() => dispatch(incrementByAmount(step))}
