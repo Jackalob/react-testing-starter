@@ -1,6 +1,6 @@
 import type { ShareableImg } from '@/types/ShareableImg';
 
-const data: ShareableImg[] = [
+export const data: ShareableImg[] = [
   {
     id: 'LTw2ld-5q4M',
     author: 'Anita Austvika',

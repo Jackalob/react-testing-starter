@@ -18,6 +18,7 @@ const SharedLinkModal = ({ open, onClose, embedUrl }: IProps) => {
       onClose={onClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      data-testid="dialog"
       fullWidth={true}
       maxWidth={"sm"}
       sx={{ paddingTop: 2, paddingRight: 4, paddingBottom: 3 }}
