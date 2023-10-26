@@ -1,4 +1,4 @@
-import { screen, render } from '@testing-library/react'
+import { screen, render, waitForElementToBeRemoved, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Gallery from '../Gallery'
 import GalleryProvider from '../GalleryProvider'
@@ -13,14 +13,15 @@ describe('Home', () => {
         </GalleryProvider>
       )
       const mainText = screen.getByText('Shareable content')
-      const titleText = screen.getByText(data[0].title)
+      const cardTitleText = screen.getByText(data[0].title)
 
       expect(mainText).toBeInTheDocument()
-      expect(titleText).toBeInTheDocument()
+      expect(cardTitleText).toBeInTheDocument()
     })
   })
+
   describe('Behavior', () => {
-    it('should render dialog after clicking the share button', async () => {
+    it('should render dialog after clicking share button', async () => {
       render(
         <GalleryProvider>
           <Gallery images={data} />
@@ -28,9 +29,45 @@ describe('Home', () => {
       )
       const button = screen.getAllByRole('button', { name: /SHARE/i })[0]
       await userEvent.click(button)
-      
+
       const dialogElem = screen.getByTestId('dialog')
       expect(dialogElem).toBeInTheDocument()
+    })
+
+    it('should close the dialog after clicking the backdrop of the dialog', async () => {
+      render(
+        <GalleryProvider>
+          <Gallery images={data} />
+        </GalleryProvider>
+      )
+      const button = screen.getAllByRole('button', { name: /SHARE/i })[0]
+      await userEvent.click(button)
+
+      const dialog = screen.getByTestId('dialog');
+      expect(dialog).toBeInTheDocument()
+
+      // eslint-disable-next-line testing-library/no-node-access
+      await userEvent.click(dialog.firstChild as HTMLElement)
+      await waitForElementToBeRemoved(() => screen.queryByTestId("dialog"));
+      expect(screen.queryByTestId('dialog')).not.toBeInTheDocument()
+    })
+
+    it('should highlight the url after clicking the embed url input', async () => {
+      render(
+        <GalleryProvider>
+          <Gallery images={data} />
+        </GalleryProvider>
+      )
+      const button = screen.getAllByRole('button', { name: /SHARE/i })[0]
+      await userEvent.click(button)
+
+      const dialog = screen.getByTestId('dialog');
+      expect(dialog).toBeInTheDocument()
+
+      const input = within(dialog).getByRole('textbox') as HTMLInputElement
+      await userEvent.click(input);
+      const selectedTextLength = input.selectionEnd! - input.selectionStart!;
+      expect(input.value.length).toBe(selectedTextLength)
     })
   })
 })
